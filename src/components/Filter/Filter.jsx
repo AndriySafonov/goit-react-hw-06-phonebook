@@ -1,17 +1,17 @@
 import PropTypes from 'prop-types';
 import css from './Filter.module.css';
-
 import { useDispatch, useSelector } from 'react-redux';
 import { setFilter } from '../../redux/filterSlice';
 import { selectorFilter } from '../../redux/selectors';
 
 export function Filter() {
-  const filter = useSelector(selectorFilter);
-  const dispatch = useDispatch();
+  const filter = useSelector(selectorFilter);// получаем текущее значение фильтра из store с помощью useSelector
+  const dispatch = useDispatch();// создаем функцию для dispatch действий в store
 
+  // Создаем функцию handleChange, которая будет вызываться при изменении значения input
   const handleChange = event => {
-    const value = event.target.value;
-    dispatch(setFilter(value));
+    const value = event.target.value;// получаем значение input
+    dispatch(setFilter(value));// диспатчим действие setFilter с новым значением фильтра
   };
 
   return (
@@ -20,8 +20,8 @@ export function Filter() {
       <input
         className={css.input}
         type="text"
-        onChange={handleChange}
-        value={filter}
+        onChange={handleChange} // привязываем функцию handleChange к событию onChange элемента input
+        value={filter}// устанавливаем текущее значение фильтра в качестве значения элемента input
       />
     </label>
   );

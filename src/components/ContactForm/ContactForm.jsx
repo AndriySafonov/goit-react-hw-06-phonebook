@@ -7,20 +7,21 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectorContscts } from '../../redux/selectors';
 
 export const ContactForm = () => {
-  const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
-  const dispatch = useDispatch();
-  const contacts = useSelector(selectorContscts);
+  const [name, setName] = useState('');// устанавливаем начальное значение name ''
+  const [number, setNumber] = useState(''); // устанавливаем начальное значение number ''
+  const dispatch = useDispatch();// получаем метод dispatch из хука useDispatch
+  const contacts = useSelector(selectorContscts);// получаем список контактов из стейта через селектор selectorContscts
 
+  // функция-обработчик события изменения значения в инпуте
   const handleChange = e => {
     const { name, value } = e.currentTarget;
     switch (name) {
-      case 'name':
-        setName(value);
+      case 'name':// если изменение произошло в инпуте с именем name
+        setName(value);// обновляем состояние name
         break;
 
-      case 'number':
-        setNumber(value);
+      case 'number':// если изменение произошло в инпуте с именем number
+        setNumber(value);// обновляем состояние number
         break;
 
       default:
@@ -28,25 +29,27 @@ export const ContactForm = () => {
     }
   };
 
+  // функция-обработчик события отправки формы
   const handleSubmit = event => {
     event.preventDefault();
 
-    const includeName = contacts.find(user => user.name === name);
-    if (includeName) {
-      alert(`${name} is already in contacs`);
+    const includeName = contacts.find(user => user.name === name);// проверяем, есть ли контакт с таким именем в списке
+    if (includeName) {// если имя уже есть в списке контактов
+      alert(`${name} is already in contacs`);// выводим сообщение об этом
       return;
     }
 
-    dispatch(
+    dispatch(// если имя отсутствует в списке контактов, то добавляем новый контакт в стейт через экшн addContact
       addContact({
         name,
         number,
       })
     );
-    setName('');
-    setNumber('');
+    setName('');// обнуляем состояние name
+    setNumber('');// обнуляем состояние number
   };
 
+  // возвращаем разметку формы и элементов управления вместе со стилями
   return (
     <form className={css.container} onSubmit={handleSubmit}>
       <label className={css.item}>
